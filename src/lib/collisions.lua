@@ -1,7 +1,7 @@
 
 --Platformer mechanics and code are originally from
 --Nerdy Teachers.com
---small adjustments and additions by T713
+--small adjustments and additions by Matt
 function collide_map(object, aim, flag_number)
   -- object = table (x, y, w, h)
   local x = object.x
@@ -34,6 +34,11 @@ function collide_map(object, aim, flag_number)
     y1 = y + h
     x2 = x + w - 2
     y2 = y + h
+  elseif aim == "center" then
+    x1 = x + 3
+    y1 = y + 3
+    x2 = x + 5
+    y2 = y + 5
   end
 
   -- pixels to tiles

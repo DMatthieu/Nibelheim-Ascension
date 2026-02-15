@@ -5,8 +5,8 @@ function Player:new()
   local instance = setmetatable({}, Player)
 
   instance.sp = 9
-  instance.x = 64
-  instance.y = 64
+  instance.x = 46
+  instance.y = 480
   instance.w = 8
   instance.h = 8
   instance.flp = false
@@ -21,6 +21,7 @@ function Player:new()
   instance.jumping = false
   instance.falling = false
   instance.sliding = false
+  instance.climbing = false
   instance.landed = false
 
   instance.gravity = 0.3
@@ -48,10 +49,33 @@ function Player:update()
     self.running = true
     self.flp = true
   end
+  --right
   if btn(1) then
     self.dx += self.acc
     self.running = true
     self.flp = false
+  end
+
+  --ladders
+  if btn(2)
+  and collide_map(player, "up", 2) then
+    self.climbing = true
+    self.dy -= (self.boost / 4)
+    if self.dy < -3 then self.dy = -3 end
+    -----test ------
+    sfx(0)
+  else
+    self.climbing = false
+  end
+
+  -- collectibles
+  if collide_map(player, "center", 3) then
+    local mx = flr((self.x + 3)/8)
+    local my = flr((self.y + 3)/8)
+    
+    mset(mx, my, 0)
+
+    sfx(1)
   end
 
   --slide
@@ -98,9 +122,11 @@ function Player:update()
 
     self.dx = self:limit_speed(self.dx, self.max_dx)
 
+    --if walls
     if collide_map(player, "left", 1) then
       self.dx = 0
     end
+
   elseif self.dx > 0 then
 
     self.dx = self:limit_speed(self.dx, self.max_dx)
@@ -127,6 +153,10 @@ end
 
 function Player:draw()
   spr(self.sp, self.x, self.y, 1, 1, self.flp, false )
+
+
+  -- print("x= "..self.x, self.x - 60, self.y-60,8)
+  -- print("y= "..self.y, self.x - 60, self.y-50,8)
 end
 
 --******************

@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "PICO-8: Run main.p8",
+      "type": "shell",
+      "command": "pico8",
+      "args": ["-run", "${workspaceFolder}/main.p8"],
+      "problemMatcher": []
+    },
+    {
+      "label": "PICO-8: Export HTML",
+      "type": "shell",
+      "command": "pico8",
+      "args": ["-export", "${workspaceFolder}/build/monjeu.html", "${workspaceFolder}/main.p8"],
+      "problemMatcher": []
+    },
+    {
+      "label": "PICO-8: Export PNG cart",
+      "type": "shell",
+      "command": "pico8",
+      "args": ["-export", "${workspaceFolder}/build/monjeu.p8.png", "${workspaceFolder}/main.p8"],
+      "problemMatcher": []
+    }
+  ]
+}

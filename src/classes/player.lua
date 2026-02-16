@@ -221,8 +221,8 @@ function Player:draw()
     end
   end
 
-  -- print("x= "..self.x, self.x - 60, self.y-60,8)
-  -- print("y= "..self.y, self.x - 60, self.y-50,8)
+  print("x= "..self.x, self.x - 60, self.y-60,8)
+  print("y= "..self.y, self.x - 60, self.y-50,8)
 end
 
 --******************

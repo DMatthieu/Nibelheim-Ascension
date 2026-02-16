@@ -29,6 +29,8 @@ function Goblin:update()
 
   --animate
   self:animate()
+
+  -- self:check_blade_collisions()
 end
 
 function Goblin:draw()
@@ -53,5 +55,5 @@ function Goblin:animate()
       if self.sp > 42 then
         self.sp = 41
       end
-    end
+  end
 end

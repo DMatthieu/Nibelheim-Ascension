@@ -31,12 +31,15 @@ function Player:new()
   instance.landed = false
   instance.attacking = false
   instance.attacking_right = false
+  instance.attacking_left = false
 
   instance.gravity = 0.3
   instance.friction = 0.85
 
   --camera
   instance.cam_x = 0
+
+  instance.debug = false
 
   return instance
 end
@@ -63,6 +66,11 @@ function Player:update()
     self.running = true
     self.flp = false
   end
+
+  --compute sword position if attacking, even if it is not displayed
+  self.sword_x_left = self.x - 8
+  self.sword_x_right = self.x + 8
+  self.sword_y = self.y
 
   --ladders
   if btn(2)
@@ -108,8 +116,9 @@ function Player:update()
   and not self.running then
     self.attacking = true
     self.attacking_right = true
-    self.sword_x = self.x + 8
-    self.sword_y = self.y
+    self.attacking_left = false
+    -- self.sword_x = self.x + 8
+    -- self.sword_y = self.y
     self.attack_start_time = time()
     sfx(3)
 
@@ -123,9 +132,10 @@ function Player:update()
   and not self.attacking
   and not self.running then
     self.attacking = true
-    self.attacking_right = true
-    self.sword_x = self.x - 8
-    self.sword_y = self.y
+    self.attacking_left = true
+    self.attacking_right = false
+    -- self.sword_x = self.x - 8
+    -- self.sword_y = self.y
     self.attack_start_time = time()
     sfx(3)
 
@@ -213,16 +223,23 @@ function Player:update()
 end
 
 function Player:draw()
+  --draw player
   spr(self.sp, self.x, self.y, 1, 1, self.flp, false )
+
+
   if self.attacking then
     if self.attacking_right then
-        spr(6, self.sword_x, self.sword_y,1,1,self.flp, false)
-
+        spr(6, self.sword_x_right, self.sword_y,1,1,self.flp, false)
+    elseif self.attacking_left then
+        spr(6, self.sword_x_left, self.sword_y,1,1,self.flp, false)
     end
   end
 
-  print("x= "..self.x, self.x - 60, self.y-60,8)
-  print("y= "..self.y, self.x - 60, self.y-50,8)
+  if self.debug then
+    print("x= "..self.x, self.x - 60, self.y-60,8)
+    print("y= "..self.y, self.x - 60, self.y-50,8)  
+  end
+  
 end
 
 --******************

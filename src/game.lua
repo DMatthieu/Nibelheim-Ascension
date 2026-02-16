@@ -11,9 +11,7 @@ function game_update()
   player:update()
   player:animate()
 
-  --camera
-  
-  
+  game_map:update()
 end
 
 function game_draw()

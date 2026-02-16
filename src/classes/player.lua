@@ -68,7 +68,18 @@ function Player:update()
     self.climbing = false
   end
 
-  -- collectibles
+  --sword
+  if collide_map(player, "center", 4) then
+    local mx = flr((self.x + 4)/8)
+    local my = flr((self.y + 3)/8)
+    
+    mset(mx, my, 51)
+    mset(mx, my-1, 0)
+
+    sfx(2)
+  end
+
+  -- crystal collectibles
   if collide_map(player, "center", 3) then
     local mx = flr((self.x + 3)/8)
     local my = flr((self.y + 3)/8)

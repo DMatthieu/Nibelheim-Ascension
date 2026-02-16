@@ -15,14 +15,22 @@ function Player:new()
   instance.max_dx = 2
   instance.max_dy = 3
   instance.acc = 0.5
-  instance.boost = 4
+  instance.boost = 3
   instance.anim = 0
+  instance.possess_sword = false
+  instance.attack_start_time = 0
+  instance.attack_duration = .2
+  instance.sword_x = 0
+  instance.sword_y = 0
+  --states
   instance.running = false
   instance.jumping = false
   instance.falling = false
   instance.sliding = false
   instance.climbing = false
   instance.landed = false
+  instance.attacking = false
+  instance.attacking_right = false
 
   instance.gravity = 0.3
   instance.friction = 0.85
@@ -68,7 +76,7 @@ function Player:update()
     self.climbing = false
   end
 
-  --sword
+  --collect sword
   if collide_map(player, "center", 4) then
     local mx = flr((self.x + 4)/8)
     local my = flr((self.y + 3)/8)
@@ -76,10 +84,12 @@ function Player:update()
     mset(mx, my, 51)
     mset(mx, my-1, 0)
 
+    self.possess_sword = true
+
     sfx(2)
   end
 
-  -- crystal collectibles
+  -- collect crystal 
   if collide_map(player, "center", 3) then
     local mx = flr((self.x + 3)/8)
     local my = flr((self.y + 3)/8)
@@ -87,6 +97,46 @@ function Player:update()
     mset(mx, my, 0)
 
     sfx(1)
+  end
+
+  --attack with sword to the right
+  if self.landed
+  and self.possess_sword
+  and btnp(4)
+  and not self.flp
+  and not self.attacking
+  and not self.running then
+    self.attacking = true
+    self.attacking_right = true
+    self.sword_x = self.x + 8
+    self.sword_y = self.y
+    self.attack_start_time = time()
+    sfx(3)
+
+  end
+
+  --attack with sword to the left
+  if self.landed
+  and self.possess_sword
+  and btnp(4)
+  and self.flp
+  and not self.attacking
+  and not self.running then
+    self.attacking = true
+    self.attacking_right = true
+    self.sword_x = self.x - 8
+    self.sword_y = self.y
+    self.attack_start_time = time()
+    sfx(3)
+
+  end
+
+  -- gestion durée
+  if self.attacking then
+    if time() - self.attack_start_time > self.attack_duration then
+      self.attacking = false
+      self.attacking_right = false
+    end
   end
 
   --slide
@@ -164,7 +214,12 @@ end
 
 function Player:draw()
   spr(self.sp, self.x, self.y, 1, 1, self.flp, false )
+  if self.attacking then
+    if self.attacking_right then
+        spr(6, self.sword_x, self.sword_y,1,1,self.flp, false)
 
+    end
+  end
 
   -- print("x= "..self.x, self.x - 60, self.y-60,8)
   -- print("y= "..self.y, self.x - 60, self.y-50,8)

@@ -1,4 +1,3 @@
-
 --Platformer mechanics and code are originally from
 --Nerdy Teachers.com
 --small adjustments and additions by Matt
@@ -27,7 +26,7 @@ function collide_map(object, aim, flag_number)
   elseif aim == "up" then
     x1 = x + 1
     y1 = y - 1
-    x2 = x + w -1
+    x2 = x + w - 1
     y2 = y
   elseif aim == "down" then
     x1 = x + 2
@@ -48,11 +47,43 @@ function collide_map(object, aim, flag_number)
   y2 /= 8
 
   if fget(mget(x1, y1), flag_number)
-  or fget(mget(x1, y2), flag_number)
-  or fget(mget(x2, y1), flag_number)
-  or fget(mget(x2, y2), flag_number)then
+      or fget(mget(x1, y2), flag_number)
+      or fget(mget(x2, y1), flag_number)
+      or fget(mget(x2, y2), flag_number) then
     return true
   else
     return false
   end
+end
+
+function sphere_collide_sphere(obj1, obj2)
+  local x1 = obj1.x
+  local y1 = obj1.y
+  -- local w1 = obj1.w
+  -- local h1 = obj1.h
+  local r1 = obj1.agro_radius
+
+  local x2 = obj2.x
+  local y2 = obj2.y
+  -- local w2 = obj2.w
+  -- local h2 = obj2.h
+  local r2 = obj2.agro_radius
+
+  return (abs(x1 - x2) <= (r1 + r2))
+end
+
+function spr_object_collide_spr_object(obj1, obj2)
+  local x1 = obj1.x
+  local y1 = obj1.y
+  -- local w1 = obj1.w
+  -- local h1 = obj1.h
+  local w1 = obj1.w
+
+  local x2 = obj2.x
+  local y2 = obj2.y
+  -- local w2 = obj2.w
+  -- local h2 = obj2.h
+  local w2 = obj2.w
+
+  return (abs(x1 - x2) <= 16)
 end

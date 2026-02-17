@@ -22,6 +22,13 @@ function Player:new()
   instance.attack_duration = .2
   instance.sword_x = 0
   instance.sword_y = 0
+
+  --life and damage statements
+  instance.pv = 5
+  instance.damage_cooldown = 1
+  instance.last_damage_time = 0
+  instance.attack_cooldown = 1
+  instance.last_attack_time = .5
   --states
   instance.running = false
   instance.jumping = false
@@ -35,6 +42,9 @@ function Player:new()
 
   instance.gravity = 0.3
   instance.friction = 0.85
+
+  --agro
+  instance.agro_radius = 8
 
   --camera
   instance.cam_x = 0
@@ -50,7 +60,9 @@ function Player:update()
   self.cam_y = self.y - 64
   camera(self.cam_x, self.cam_y)
 
-  --physics
+  --PHYSICS
+  self.x += self.dx
+  self.y += self.dy
   self.dy += self.gravity
   self.dx *= self.friction
 
@@ -79,7 +91,7 @@ function Player:update()
     self.climbing = false
   end
 
-  --compute sword position if attacking, even if it is not displayed
+  --compute sword position even if it is not displayed
   self.sword_x_left = self.x - 8
   self.sword_x_right = self.x + 8
   self.sword_y = self.y
@@ -107,6 +119,16 @@ function Player:update()
     sfx(1)
   end
 
+  --get hurt by flag6 (flames, traps....)
+  if self.landed
+      and collide_map(player, "center", 6)
+      -- GESTION DU COOLDOWN
+      and time() - self.last_damage_time > self.damage_cooldown then
+    self.last_damage_time = time()
+    self.pv -= 1
+    sfx(4)
+  end
+
   --attack with sword to the right
   if self.landed
       and self.possess_sword
@@ -117,8 +139,6 @@ function Player:update()
     self.attacking = true
     self.attacking_right = true
     self.attacking_left = false
-    -- self.sword_x = self.x + 8
-    -- self.sword_y = self.y
     self.attack_start_time = time()
     sfx(3)
   end
@@ -133,8 +153,6 @@ function Player:update()
     self.attacking = true
     self.attacking_left = true
     self.attacking_right = false
-    -- self.sword_x = self.x - 8
-    -- self.sword_y = self.y
     self.attack_start_time = time()
     sfx(3)
   end
@@ -209,9 +227,6 @@ function Player:update()
       self.sliding = false
     end
   end
-
-  self.x += self.dx
-  self.y += self.dy
 end
 
 function Player:draw()
@@ -226,6 +241,12 @@ function Player:draw()
     end
   end
 
+  --draw life points
+  for i = 1, self.pv do
+    print("pv: " .. self.pv, self.x - 60, self.y - 60, 8)
+  end
+
+  --DEBUG player X and Y
   if self.debug then
     print("x= " .. self.x, self.x - 60, self.y - 60, 8)
     print("y= " .. self.y, self.x - 60, self.y - 50, 8)
@@ -233,11 +254,6 @@ function Player:draw()
 end
 
 --******************
-
--- function Player:move()
---   if btn(0) then self.x -= self.dx end
---   if btn(1) then self.x += self.dx end
--- end
 
 function Player:animate()
   if self.jumping then
@@ -268,4 +284,11 @@ end
 
 function Player:limit_speed(num, maximum)
   return mid(-maximum, num, maximum)
+end
+
+function Player:damage(dmg)
+  if time() - self.last_damage_time > self.damage_cooldown then
+    self.last_damage_time = time()
+    self.pv -= dmg
+  end
 end

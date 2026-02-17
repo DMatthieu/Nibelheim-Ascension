@@ -9,12 +9,18 @@ function Goblin:new(x, y)
   instance.w = 0
   instance.h = 0
   instance.anim = 0
-  instance.sp = 41--sprite
+  instance.sp =
+    --sprite
+    41
   instance.pv = 1
   instance.flp = false
   --states
   instance.alive = true
   instance.dead = false
+  -- agro
+  instance.agro_radius = 20
+  instance.debug_agro = true
+  instance.agro_acquired = false
 
   return instance
 end
@@ -34,7 +40,16 @@ function Goblin:update()
 end
 
 function Goblin:draw()
-  spr(self.sp, self.x, self.y,1,1,self.flp,false)
+  spr(self.sp, self.x, self.y, 1, 1, self.flp, false)
+
+  -- DEBUG AGRO GOBLINS
+  if self.debug_agro then
+    if not self.agro_acquired then
+      circ(self.x, self.y, self.agro_radius, 11) -- cercle vert
+    elseif self.agro_acquired then
+      circ(self.x, self.y, self.agro_radius, 8) --cercle rouge
+    end
+  end
 end
 
 --*****************
@@ -50,10 +65,10 @@ end
 
 function Goblin:animate()
   if time() - self.anim > .1 then
-      self.anim = time()
-      self.sp += 1
-      if self.sp > 42 then
-        self.sp = 41
-      end
+    self.anim = time()
+    self.sp += 1
+    if self.sp > 42 then
+      self.sp = 41
+    end
   end
 end

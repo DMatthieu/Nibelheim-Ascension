@@ -5,11 +5,11 @@ function Game_map:new()
   local instance = setmetatable({}, Game_map)
 
   instance.monsters = {
-    { m_type = Goblin:new(367, 496) },
-    { m_type = Goblin:new(307, 496) },
-    { m_type = Goblin:new(24, 416) },
-    { m_type = Goblin:new(202, 376) },
-    { m_type = Goblin:new(203, 448) }
+    { m_type = Goblin:new(367, 498) },
+    { m_type = Goblin:new(307, 498) },
+    { m_type = Goblin:new(24, 418) },
+    { m_type = Goblin:new(202, 378) },
+    { m_type = Goblin:new(203, 450) }
   }
   return instance
 end

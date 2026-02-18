@@ -6,8 +6,8 @@ function Goblin:new(x, y)
 
   instance.x = x
   instance.y = y
-  instance.w = 0
-  instance.h = 0
+  instance.w = 8
+  instance.h = 8
   instance.anim = 0
 
   --physics
@@ -18,6 +18,8 @@ function Goblin:new(x, y)
 
   instance.dx = 0
   instance.dy = 0
+  instance.max_dx = 2
+  instance.max_dy = 3
   instance.go_to_left = false
   instance.go_to_right = false
   --sprite
@@ -29,6 +31,11 @@ function Goblin:new(x, y)
   instance.alive = true
   instance.dead = false
   instance.running = false
+  instance.jumping = false
+  instance.falling = false
+  instance.sliding = false
+  instance.climbing = false
+  instance.landed = false
   -- agro
   instance.agro_radius = 20
   instance.debug_agro = false
@@ -51,9 +58,29 @@ function Goblin:update()
   --physics
   --self.dy += self.gravity
   self.dx *= self.friction
-
+  self.dy += self.gravity
   self.x += self.dx
   self.y += self.dy
+
+  if self.dy > 0 then
+    self.falling = true
+    self.landed = false
+    self.jumping = false
+
+    self.dy = self:limit_speed(self.dy, self.max_dy)
+
+    if collide_map(self, "down", 0) then
+      self.landed = true
+      self.falling = false
+      self.dy = 0
+      self.y -= ((self.y + self.h) % 8)
+    end
+  elseif self.dy < 0 then
+    self.jumping = true
+    if collide_map(self, "up", 1) then
+      self.dy = 0
+    end
+  end
 
   -- ***** ORDER MACHINE ****
   -- ORDER: Go to LEFT or RIGHT
@@ -130,4 +157,8 @@ function Goblin:animate()
       self.sp = 41
     end
   end
+end
+
+function Goblin:limit_speed(num, maximum)
+  return mid(-maximum, num, maximum)
 end

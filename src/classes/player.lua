@@ -147,7 +147,7 @@ function Player:update()
       printh("gob x = " .. m.m_type.x)
       printh("sword x = " .. self.sword_x_right)
       printh("player attacking ? = " .. tostr(self.attacking))
-      if abs(m.m_type.x - self.sword_x_right) <= 8 then
+      if (abs(m.m_type.x - self.sword_x_right) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
       end
     end
@@ -171,7 +171,7 @@ function Player:update()
       printh("gob x = " .. m.m_type.x)
       printh("sword x = " .. self.sword_x_left)
       printh("player attacking ? = " .. tostr(self.attacking))
-      if abs(m.m_type.x - self.sword_x_left) <= 8 then
+      if (abs(m.m_type.x - self.sword_x_left) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
       end
     end

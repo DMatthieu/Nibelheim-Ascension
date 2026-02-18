@@ -51,7 +51,7 @@ function Player:new()
   --camera
   instance.cam_x = 0
 
-  instance.debug = false
+  instance.debug = true
 
   return instance
 end
@@ -255,7 +255,9 @@ function Player:draw()
 
   --draw life points
   for i = 1, self.pv do
-    print("pv: " .. self.pv, self.x - 60, self.y - 60, 8)
+    if not self.debug then
+      print("pv: " .. self.pv, self.x - 60, self.y - 60, 8)
+    end
   end
 
   --DEBUG player X and Y

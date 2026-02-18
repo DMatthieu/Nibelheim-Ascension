@@ -65,7 +65,7 @@ function sphere_collide_sphere(obj1, obj2)
   local y2 = obj2.y
   local r2 = obj2.agro_radius
 
-  return (abs(x1 - x2) <= (r1 + r2))
+  return ((abs(x1 - x2) <= (r1 + r2)) and (abs(y1 - y2) <= (r1 + r2)))
 end
 
 function spr_object_collide_spr_object(obj1, obj2)

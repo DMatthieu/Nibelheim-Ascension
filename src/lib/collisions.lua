@@ -59,14 +59,10 @@ end
 function sphere_collide_sphere(obj1, obj2)
   local x1 = obj1.x
   local y1 = obj1.y
-  -- local w1 = obj1.w
-  -- local h1 = obj1.h
   local r1 = obj1.agro_radius
 
   local x2 = obj2.x
   local y2 = obj2.y
-  -- local w2 = obj2.w
-  -- local h2 = obj2.h
   local r2 = obj2.agro_radius
 
   return (abs(x1 - x2) <= (r1 + r2))
@@ -75,15 +71,22 @@ end
 function spr_object_collide_spr_object(obj1, obj2)
   local x1 = obj1.x
   local y1 = obj1.y
-  -- local w1 = obj1.w
-  -- local h1 = obj1.h
   local w1 = obj1.w
 
   local x2 = obj2.x
   local y2 = obj2.y
-  -- local w2 = obj2.w
-  -- local h2 = obj2.h
   local w2 = obj2.w
 
   return (abs(x1 - x2) <= 16)
+end
+
+function sword_collide_spr_object(player_sword_x, obj2)
+  local sword_x = player_sword_x
+  local x2 = obj2.x
+
+  printh("sword_x = " .. player.sword_x)
+  --printh("obj2 = " .. obj2)
+  printh("obj2.x = " .. obj2.x)
+
+  return (abs(sword_x - x2) <= 16)
 end

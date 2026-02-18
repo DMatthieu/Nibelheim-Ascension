@@ -13,7 +13,11 @@ end
 function Game_map:update()
   --update all monsters
   for m in all(self.monsters) do
+    --update monsters
     m.m_type:update()
+    if m.m_type.dead then
+      del(self.monsters, m)
+    end
   end
 end
 

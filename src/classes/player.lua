@@ -17,6 +17,8 @@ function Player:new()
   instance.acc = 0.5
   instance.boost = 3
   instance.anim = 0
+
+  --sword
   instance.possess_sword = false
   instance.attack_start_time = 0
   instance.attack_duration = .2
@@ -140,6 +142,16 @@ function Player:update()
     self.attacking_right = true
     self.attacking_left = false
     self.attack_start_time = time()
+
+    for m in all(game_map.monsters) do
+      printh("gob x = " .. m.m_type.x)
+      printh("sword x = " .. self.sword_x_right)
+      printh("player attacking ? = " .. tostr(self.attacking))
+      if abs(m.m_type.x - self.sword_x_right) <= 8 then
+        m.m_type:receive_damage(1)
+      end
+    end
+
     sfx(3)
   end
 

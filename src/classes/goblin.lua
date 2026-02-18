@@ -116,8 +116,10 @@ function Goblin:receive_damage(dmg)
 end
 
 function Goblin:die()
-  self.alive = false
-  self.dead = true
+  if self.pv <= 0 then
+    self.alive = false
+    self.dead = true
+  end
 end
 
 function Goblin:animate()

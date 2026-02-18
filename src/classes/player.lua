@@ -166,6 +166,16 @@ function Player:update()
     self.attacking_left = true
     self.attacking_right = false
     self.attack_start_time = time()
+
+    for m in all(game_map.monsters) do
+      printh("gob x = " .. m.m_type.x)
+      printh("sword x = " .. self.sword_x_left)
+      printh("player attacking ? = " .. tostr(self.attacking))
+      if abs(m.m_type.x - self.sword_x_left) <= 8 then
+        m.m_type:receive_damage(1)
+      end
+    end
+
     sfx(3)
   end
 

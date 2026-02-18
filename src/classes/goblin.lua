@@ -31,7 +31,7 @@ function Goblin:new(x, y)
   instance.running = false
   -- agro
   instance.agro_radius = 20
-  instance.debug_agro = true
+  instance.debug_agro = false
   instance.agro_acquired = false
 
   return instance

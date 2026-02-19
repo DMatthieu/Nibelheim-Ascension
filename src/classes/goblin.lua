@@ -82,6 +82,28 @@ function Goblin:update()
     end
   end
 
+  --check collisions left and right
+  if self.dx < 0 then
+    --if walls
+    if collide_map(self, "left", 1) then
+      --mob repoussé si il se cogne au mur
+      self.dx = self.acc + 1
+      sfx(6)
+    else
+      self.dx = self:limit_speed(self.dx, self.max_dx)
+    end
+  elseif self.dx > 0 then
+    if collide_map(self, "right", 1) then
+      --mob repoussé si il se cogne au mur
+      self.dx = -self.acc - 1
+      sfx(6)
+    else
+      self.dx = self:limit_speed(self.dx, self.max_dx)
+    end
+  else
+    self.dx = 0
+  end
+
   -- ***** ORDER MACHINE ****
   -- ORDER: Go to LEFT or RIGHT
   if self.go_to_left then

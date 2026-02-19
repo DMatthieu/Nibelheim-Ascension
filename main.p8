@@ -3,22 +3,47 @@ version 43
 __lua__
 #include src/lib/collisions.lua
 #include src/game.lua
+#include src/menu.lua
+#include src/game_over.lua
 #include src/classes/game_map.lua
 #include src/classes/player.lua
 #include src/classes/goblin.lua
 
 
 function _init()
+  scene = "menu"
+
+  menu_init()
   game_init()
+  game_over_init()
 end
 
 function _update()
-  game_update()
+  if scene == "menu" then
+    menu_update()
+  elseif scene=="story" then
+  
+  elseif scene=="game" then
+    game_update()
+  elseif scene=="game_over" then
+    game_over_update()
+  end
 end
 
 function _draw()
   cls()
-  game_draw()
+  
+  if scene == "menu" then
+    menu_draw()
+  elseif scene=="story" then
+  
+  elseif scene=="game" then
+    game_draw()
+  elseif scene=="game_over" then
+    
+    game_over_draw()
+  end
+  
 end
 __gfx__
 00000000d666666d777777217777772164444446000f200000000000000000000000000000881100086666100088110000881100008811000088110000000000

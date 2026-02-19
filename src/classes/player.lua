@@ -51,7 +51,7 @@ function Player:new()
   --camera
   instance.cam_x = 0
 
-  instance.debug = true
+  instance.debug = false
 
   return instance
 end
@@ -93,6 +93,11 @@ function Player:update()
     self.climbing = false
   end
 
+  --death
+  if self.pv <= 0 then
+    scene = "game_over"
+  end
+
   --compute sword position even if it is not displayed
   self.sword_x_left = self.x - 8
   self.sword_x_right = self.x + 8
@@ -128,6 +133,7 @@ function Player:update()
       and time() - self.last_damage_time > self.damage_cooldown then
     self.last_damage_time = time()
     self.pv -= 1
+
     sfx(4)
   end
 

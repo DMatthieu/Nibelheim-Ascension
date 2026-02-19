@@ -77,7 +77,7 @@ function spr_object_collide_spr_object(obj1, obj2)
   local y2 = obj2.y
   local w2 = obj2.w
 
-  return (abs(x1 - x2) <= 16)
+  return (abs(x1 - x2) <= 8)
 end
 
 function sword_collide_spr_object(player_sword_x, obj2)

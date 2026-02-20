@@ -25,7 +25,7 @@ function Goblin:new(x, y)
   --sprite
   instance.sp = 41
 
-  instance.pv = 1
+  instance.pv = 2
   instance.flp = false
   --states
   instance.alive = true
@@ -80,6 +80,11 @@ function Goblin:update()
     if collide_map(self, "up", 1) then
       self.dy = 0
     end
+  end
+
+  --collide flames
+  if collide_map(self, "center", 6) then
+    self:receive_damage(1)
   end
 
   --check collisions left and right

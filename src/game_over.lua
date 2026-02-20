@@ -9,6 +9,9 @@ end
 
 function game_over_draw()
   camera(0, 0)
-  print("you died", 10, 10, 8)
-  printh(scene)
+  print("you died...", 40, 55, 2)
+  print("you died...", 40, 57, 2)
+  print("you died...", 39, 56, 2)
+  print("you died...", 41, 56, 2)
+  print("you died...", 40, 56, 8)
 end

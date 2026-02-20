@@ -54,7 +54,7 @@ function Player:new()
   --camera
   instance.cam_x = 0
 
-  instance.debug = false
+  instance.debug = true
 
   return instance
 end

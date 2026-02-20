@@ -10,9 +10,11 @@ function game_update()
   player:animate()
 
   game_map:update()
+  -- blood_update()
 end
 
 function game_draw()
   game_map:draw()
   player:draw()
+  -- blood_draw()
 end

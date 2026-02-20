@@ -45,6 +45,9 @@ function Player:new()
   instance.gravity = 0.3
   instance.friction = 0.85
 
+  --particles
+  instance.particles = Particles:new()
+
   --agro
   instance.agro_radius = 8
 
@@ -137,6 +140,9 @@ function Player:update()
     sfx(4)
   end
 
+  --Particles
+  self.particles:update_particles()
+
   --attack with sword to the right
   if self.landed
       and self.possess_sword
@@ -150,11 +156,10 @@ function Player:update()
     self.attack_start_time = time()
 
     for m in all(game_map.monsters) do
-      printh("gob x = " .. m.m_type.x)
-      printh("sword x = " .. self.sword_x_right)
       printh("player attacking ? = " .. tostr(self.attacking))
       if (abs(m.m_type.x - self.sword_x_right) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
+        self.particles:make_particles(flr(rnd(12)), self.sword_x_right, self.sword_y)
       end
     end
 
@@ -174,11 +179,10 @@ function Player:update()
     self.attack_start_time = time()
 
     for m in all(game_map.monsters) do
-      printh("gob x = " .. m.m_type.x)
-      printh("sword x = " .. self.sword_x_left)
       printh("player attacking ? = " .. tostr(self.attacking))
       if (abs(m.m_type.x - self.sword_x_left) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
+        self.particles:make_particles(flr(rnd(12)), self.sword_x_left, self.sword_y)
       end
     end
 
@@ -275,6 +279,9 @@ function Player:draw()
       print("pv: " .. self.pv, self.x - 60, self.y - 60, 8)
     end
   end
+
+  --Particles
+  self.particles:draw_particles()
 
   --DEBUG player X and Y
   if self.debug then

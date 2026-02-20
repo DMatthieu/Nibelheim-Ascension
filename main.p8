@@ -2,6 +2,7 @@ pico-8 cartridge // http://www.pico-8.com
 version 43
 __lua__
 #include src/lib/collisions.lua
+#include src/lib/particles.lua
 #include src/game.lua
 #include src/menu.lua
 #include src/game_over.lua
@@ -40,7 +41,6 @@ function _draw()
   elseif scene=="game" then
     game_draw()
   elseif scene=="game_over" then
-    
     game_over_draw()
   end
   

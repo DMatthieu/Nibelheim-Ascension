@@ -3,6 +3,7 @@ version 43
 __lua__
 #include src/lib/collisions.lua
 #include src/lib/particles.lua
+#include src/lib/gui.lua
 #include src/game.lua
 #include src/title.lua
 #include src/game_over.lua

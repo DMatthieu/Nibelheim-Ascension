@@ -3,6 +3,7 @@ function game_init()
 
   game_map = Game_map:new()
   player = Player:new()
+  gui = Gui:new(player.x, player.y)
 end
 
 function game_update()
@@ -10,11 +11,11 @@ function game_update()
   player:animate()
 
   game_map:update()
-  -- blood_update()
+  gui:update(player)
 end
 
 function game_draw()
   game_map:draw()
   player:draw()
-  -- blood_draw()
+  gui:draw()
 end

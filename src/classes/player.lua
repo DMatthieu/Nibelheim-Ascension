@@ -31,6 +31,10 @@ function Player:new()
   instance.last_damage_time = 0
   instance.attack_cooldown = 1
   instance.last_attack_time = .5
+
+  --score
+  instance.score = 0
+
   --states
   instance.running = false
   instance.jumping = false
@@ -54,7 +58,7 @@ function Player:new()
   --camera
   instance.cam_x = 0
 
-  instance.debug = true
+  instance.debug = false
 
   return instance
 end
@@ -125,6 +129,7 @@ function Player:update()
     local my = flr((self.y + 3) / 8)
 
     mset(mx, my, 0)
+    self.score += 100
 
     sfx(1)
   end
@@ -160,6 +165,7 @@ function Player:update()
       if (abs(m.m_type.x - self.sword_x_right) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
         self.particles:make_particles(flr(rnd(12)), self.sword_x_right, self.sword_y)
+        self.score += 500
       end
     end
 
@@ -183,6 +189,7 @@ function Player:update()
       if (abs(m.m_type.x - self.sword_x_left) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
         self.particles:make_particles(flr(rnd(12)), self.sword_x_left, self.sword_y)
+        self.score += 500
       end
     end
 

@@ -134,6 +134,17 @@ function Player:update()
     sfx(1)
   end
 
+  --collect potion
+  if collide_map(player, "center", 7) then
+    local mx = flr((self.x + 3) / 8)
+    local my = flr((self.y + 3) / 8)
+
+    mset(mx, my, 0)
+    self.pv += 2
+
+    sfx(7)
+  end
+
   --get hurt by flag6 (flames, traps....)
   if self.landed
       and collide_map(player, "center", 6)
@@ -161,7 +172,6 @@ function Player:update()
     self.attack_start_time = time()
 
     for m in all(game_map.monsters) do
-      printh("player attacking ? = " .. tostr(self.attacking))
       if (abs(m.m_type.x - self.sword_x_right) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
         self.particles:make_particles(flr(rnd(12)), self.sword_x_right, self.sword_y)
@@ -185,7 +195,6 @@ function Player:update()
     self.attack_start_time = time()
 
     for m in all(game_map.monsters) do
-      printh("player attacking ? = " .. tostr(self.attacking))
       if (abs(m.m_type.x - self.sword_x_left) <= 8) and (abs(m.m_type.y - self.sword_y) <= 8) then
         m.m_type:receive_damage(1)
         self.particles:make_particles(flr(rnd(12)), self.sword_x_left, self.sword_y)

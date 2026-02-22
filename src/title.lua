@@ -3,7 +3,7 @@ title = {}
 function title_init()
   title.t = 0
   title.sel = 1
-  title.items = { "start", "story (wip)" }
+  title.items = { "start", "story" }
   title.blink = 0
 end
 
@@ -23,9 +23,9 @@ function title_update()
     local choice = title.items[title.sel]
     if choice == "start" then
       scene = "game"
-    elseif choice == "credits" then
+    elseif choice == "story" then
       -- TODO: change state to credits
-      -- scene = "story"
+      scene = "story"
     end
   end
 end
@@ -47,7 +47,7 @@ function title_draw()
   shadow_print("nibelheim ascension", 28, 18 + bob, 7, 0)
   shadow_print("gamecodeur community", 25, 30, 6, 0)
   shadow_print("gamejam #2", 43, 39, 6, 0)
-  shadow_print("v0.0.7", 51, 120, 6, 0)
+  shadow_print("v0.0.8", 51, 120, 6, 0)
 
   -- menu
   local my = 78

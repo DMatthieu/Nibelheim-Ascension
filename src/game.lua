@@ -1,6 +1,6 @@
 function game_init()
   width, height = 128, 128
-
+  
   game_map = Game_map:new()
   player = Player:new()
   gui = Gui:new(player.x, player.y)
@@ -12,6 +12,7 @@ function game_update()
 
   game_map:update()
   gui:update(player)
+  --bebop(2)
 end
 
 function game_draw()

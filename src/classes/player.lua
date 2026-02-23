@@ -343,5 +343,6 @@ function Player:damage(dmg)
   if time() - self.last_damage_time > self.damage_cooldown then
     self.last_damage_time = time()
     self.pv -= dmg
+    sfx(4)
   end
 end

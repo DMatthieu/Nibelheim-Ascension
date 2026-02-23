@@ -133,6 +133,7 @@ function Goblin:update()
   if spr_object_collide_spr_object(self, player) then
     if self.agro_acquired then
       player:damage(1)
+      
     end
   end
 

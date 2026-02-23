@@ -34,6 +34,7 @@ function Player:new()
 
   --score
   instance.score = 0
+  instance.nb_crystals = 0
 
   --states
   instance.running = false
@@ -123,14 +124,19 @@ function Player:update()
     sfx(2)
   end
 
+  --collide level exit
+  if collide_map(player, "center", 2) and collide_map(player, "center", 7) then
+    scene = "victory"
+  end
+
   -- collect crystal
-  if collide_map(player, "center", 3) then
+  if collide_map(player, "right", 3) then
     local mx = flr((self.x + 3) / 8)
     local my = flr((self.y + 3) / 8)
 
     mset(mx, my, 0)
     self.score += 100
-
+    self.nb_crystals += 1
     sfx(1)
   end
 

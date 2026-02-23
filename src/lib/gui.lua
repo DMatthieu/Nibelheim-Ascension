@@ -34,4 +34,12 @@ function Gui:draw()
   print("score: " .. player.score, self.gui_x + 43, self.gui_y + 2, 2)
 
   print("score: " .. player.score, self.gui_x + 42, self.gui_y + 2, 9)
+
+  --crystals
+  print("gems: " .. player.nb_crystals, self.gui_x + 94, self.gui_y + 1, 2)
+  print("gems: " .. player.nb_crystals, self.gui_x + 94, self.gui_y + 3, 2)
+  print("gems: " .. player.nb_crystals, self.gui_x + 93, self.gui_y + 2, 2)
+  print("gems: " .. player.nb_crystals, self.gui_x + 95, self.gui_y + 2, 2)
+
+  print("gems: " .. player.nb_crystals, self.gui_x + 94, self.gui_y + 2, 9)
 end
